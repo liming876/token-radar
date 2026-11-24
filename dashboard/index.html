@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-in">
+    <p class="kicker">TOKEN LAUNCH RADAR</p>
+    <h1>Protocols that record no token yet,<br>ranked by what a token would be worth.</h1>
+    <p class="lede" id="meta-line">Reading the sealed snapshot…</p>
+  </div>
+</header>
+
+<section class="method" aria-label="How the ranking works">
+  <div class="method-in">
+    <h2>How this board prices a token that does not exist</h2>
+    <p><strong>Implied value = TVL &times; category multiple &times; growth factor &times; maturity factor.</strong>
+    The category multiple is the median market-cap-to-TVL ratio of this snapshot's own already-trading
+    protocols in the same category, shrunk toward the snapshot-wide median (&times;0.20): a category needs
+    about eight trading peers before its own median outweighs the snapshot's, and a category with no
+    trading peers is priced at the snapshot-wide median itself — so the market's own pricing of live
+    tokens anchors every estimate, and no name is hardcoded. The growth factor adds 30% of the protocol's
+    seven-day TVL change, clamped to &minus;60%&hellip;+200%; the maturity factor adds up to +30% for four
+    years of being tracked with no token recorded. Where the snapshot reports no seven-day change or no
+    tracking date, that factor is a neutral &times;1.00, never a guess. Protocols whose token already
+    trades are listed separately and never ranked. One listing per protocol: where a protocol appears
+    under several versions, the board ranks its largest listing. Wrapped, staked, bridged and restaked
+    products of tokens that already trade — the snapshot's bridge, liquid-staking and restaking
+    categories among them — and exchange balance sheets are set aside with their reasons, because they
+    are not waiting on a launch of their own. Every figure on this page is computed from the snapshot alone.</p>
+  </div>
+</section>
+
+<main>
+  <section class="stats" id="stats" aria-label="Board summary"></section>
+
+  <section class="controls" aria-label="Board controls">
+    <label class="ctl grow">Search
+      <input id="q" type="search" placeholder="Protocol name…" autocomplete="off">
+    </label>
+    <label class="ctl">Category
+      <select id="f-category"><option value="">All categories</option></select>
+    </label>
+    <label class="ctl">Chain
+      <select id="f-chain"><option value="">All chains</option></select>
+    </label>
+    <label class="ctl">Sort by
+      <select id="f-sort">
+        <option value="rank">Implied value (rank)</option>
+        <option value="tvl">TVL</option>
+        <option value="growth">7-day TVL change</option>
+        <option value="age">Years tracked, no token</option>
+        <option value="multiple">Category multiple</option>
+      </select>
+    </label>
+    <label class="ctl check">
+      <input id="f-watch" type="checkbox"> Watchlist only
+    </label>
+    <p class="ctl count" id="row-count" role="status"></p>
+  </section>
+
+  <section id="detail" class="detail" hidden aria-label="Protocol detail"></section>
+
+  <section class="board-wrap" aria-label="Ranked board">
+    <table class="board">
+      <thead>
+        <tr>
+          <th class="num">#</th>
+          <th>Protocol</th>
+          <th class="num">Implied value</th>
+          <th class="num">TVL</th>
+          <th class="num">7d</th>
+          <th class="num">Tracked</th>
+          <th>Why here</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocol matches those filters. Loosen one and the board fills again.</p>
+  </section>
+
+  <section class="panel wide-panel" aria-label="House watchlist">
+    <h2>The house watchlist — every name, and where it landed</h2>
+    <p class="panel-note">The snapshot's own watchlist: the protocols at or above the $50M TVL floor that
+    record no token and pass the house's product tests. All of them are ranked on the board above; this is
+    each one's rank and implied value. Click a name for its detail and farm plan.</p>
+    <ol class="watch-grid" id="watchlist"></ol>
+  </section>
+
+  <section class="aside-grid">
+    <div class="panel">
+      <h2>Already trading — never ranked</h2>
+      <p class="panel-note">These protocols record a token in the snapshot; the 24 largest by market
+      cap are listed here. They anchor the category multiples above; the radar's job is the ones
+      still to come.</p>
+      <ul class="live-list" id="live"></ul>
+    </div>
+    <div class="panel">
+      <h2>Set aside — and why</h2>
+      <p class="panel-note">No token recorded, but not a launch candidate: a wrapped or staked product
+      trades its underlying's token already, and an exchange balance sheet is a company's books.
+      Every set-aside protocol is listed here with its reason — nothing is silently dropped.</p>
+      <ul class="excluded-list" id="excluded"></ul>
+    </div>
+    <div class="panel">
+      <h2>Category multiples — the market anchors</h2>
+      <p class="panel-note">The multiple each ranked category is priced with: the median market-cap-to-TVL
+      of the snapshot's trading protocols in that category, shrunk toward the snapshot-wide median.
+      “Peers” is how many trading protocols priced the category; with none, the snapshot-wide
+      median is used as-is.</p>
+      <table class="mult-table">
+        <thead><tr><th>Category</th><th class="num">Peers</th><th class="num">Multiple</th></tr></thead>
+        <tbody id="multiples"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p id="foot-line">Implied values are this board's own claims, computed from the snapshot's figures —
+  not a prediction that any token will be issued, or when.</p>
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
